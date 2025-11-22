@@ -1,0 +1,10 @@
+<Form class="flex flex-col gap-y-5 py-10">
+  <input class="min-w-lg" type="range" max="100" (input)="onHadle($event)" />
+   <div class="w-full h-5 bg-gray-300 rounded-2xl overflow-hidden">
+    <div
+      class="h-full transition-all duration-300"
+      [style.width.%]="valueP()"
+      [class]="valueP() > 50 ? 'bg-amber-200' : 'bg-amber-400'"
+    ></div>
+  </div>
+</Form>
