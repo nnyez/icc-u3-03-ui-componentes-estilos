@@ -1,0 +1,47 @@
+<section class="p-8">
+  <h1 class="text-3xl font-bold mb-2 text-center">The Simpsons API</h1>
+  <h2 class="text-lg text-center mb-6">Listado de personajes</h2>
+
+  Spinner de carga
+  @if (!simpsonsResource()) {
+  <div class="flex justify-center items-center h-64">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+  }
+
+  <!-- Tabla de personajes -->
+  @if (simpsonsResource()) {
+  <div class="overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Ocupación</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (personaje of simpsonsResource()?.results ?? []; track personaje.id) {
+        <tr>
+          <td>{{ personaje.id }}</td>
+          <td>{{ personaje.name }}</td>
+          <td>{{ personaje.occupation }}</td>
+          <td>
+            <span class="badge badge-{{ personaje.status === 'Alive' ? 'success' : 'error' }}">
+              {{ personaje.status }}
+            </span>
+          </td>
+          <td>
+            <a [routerLink]="['/simpson-page/',personaje.id]" class="btn btn-sm btn-primary">
+              Ver Detalle
+            </a>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+</section>
