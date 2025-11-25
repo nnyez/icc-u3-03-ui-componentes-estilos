@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SimpsonApi } from '../../../../services/api-service';
+import { SimpsonApi } from '../../../../services/simpsonsService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap } from 'rxjs';
 

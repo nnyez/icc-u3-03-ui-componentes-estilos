@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterLinkActive } from "@angular/router";
+import { ThemeSwitcher } from "../../../../shared/components/theme-switcher/theme-switcher";
 
 @Component({
   selector: 'app-navbar-drawer',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive, ThemeSwitcher],
   templateUrl: './navbar-drawer.html',
   styleUrl: './navbar-drawer.css',
 })

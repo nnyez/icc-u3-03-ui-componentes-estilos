@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SimpsonApi } from './api-service';
+import { SimpsonApi } from './simpsonsService';
 
 describe('ApiService', () => {
   let service: SimpsonApi;

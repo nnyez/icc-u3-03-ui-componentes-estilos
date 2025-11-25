@@ -28,3 +28,8 @@ export interface SimpsonsCharacterDetail extends SimpsonsCharacter {
     image_path: string;
   };
 }
+
+export interface Options {
+  limit?: number;
+  offset?: number;
+}
