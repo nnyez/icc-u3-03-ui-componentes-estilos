@@ -1,6 +1,6 @@
 <header>
   <div class="drawer">
-    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+    <input id="my-drawer-2" #drawerToggle type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col">
       <div class="navbar bg-base-300 w-full">
         <div class="flex-none lg:hidden">
@@ -24,18 +24,25 @@
         <div class="hidden flex-none lg:block">
           <ul class="menu menu-horizontal">
             <li>
-              <a routerLink="/estilos" routerLinkActive="bg-primary text-primary-content"
+              <a
+                routerLink="/estilos-page"
+                (click)="closeDrawer()"
+                routerLinkActive="bg-primary text-primary-content"
                 >Estilos</a
               >
             </li>
             <li>
-              <a routerLink="/simpsons" routerLinkActive="bg-primary text-primary-content"
+              <a
+                routerLink="/simpson-page"
+                (click)="closeDrawer()"
+                routerLinkActive="bg-primary text-primary-content"
                 >Simpsons</a
               >
             </li>
             <li>
               <a
                 routerLink="/"
+                (click)="closeDrawer()"
                 routerLinkActive="bg-primary text-primary-content"
                 [routerLinkActiveOptions]="{ exact: true }"
                 >Home</a
@@ -53,23 +60,33 @@
 
       <ul class="menu bg-base-200 min-h-full w-80 p-4">
         <li>
-          <a routerLink="/estilos" routerLinkActive="bg-primary text-primary-content">Estilos</a>
+          <a
+            routerLink="/estilos-page"
+            routerLinkActive="bg-primary text-primary-content"
+            (click)="closeDrawer()"
+            >Estilos</a
+          >
         </li>
         <li>
-          <a routerLink="/simpsons" routerLinkActive="bg-primary text-primary-content">Simpsons</a>
+          <a
+            routerLink="/simpson-page"
+            routerLinkActive="bg-primary text-primary-content"
+            (click)="closeDrawer()"
+            >Simpsons</a
+          >
         </li>
         <li>
           <a
             routerLink="/"
             routerLinkActive="bg-primary text-primary-content"
             [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeDrawer()"
             >Home</a
           >
         </li>
       </ul>
 
-      <!-- Theme switcher al pie del menú -->
-      <div class="p-4 border-t border-base-300">
+      <div class="p-4 border-t border-base-300 bg-base-300 w-80">
         <app-theme-switcher></app-theme-switcher>
       </div>
     </div>

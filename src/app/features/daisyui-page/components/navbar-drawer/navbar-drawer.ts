@@ -9,5 +9,9 @@ import { ThemeSwitcher } from "../../../../shared/components/theme-switcher/them
   styleUrl: './navbar-drawer.css',
 })
 export class NavbarDrawer {
+closeDrawer() {
+  const drawer = document.getElementById('my-drawer-2') as HTMLInputElement;
+  if (drawer) drawer.checked = false;
+}
 
 }
