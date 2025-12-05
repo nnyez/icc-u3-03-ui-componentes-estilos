@@ -1,0 +1,59 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h1>Crea tu cuenta</h1>
+    <p class="subtitle">Regístrate para gestionar tus favoritos</p>
+
+    <div class="alert error" *ngIf="registerResource.error()">
+      {{ errorMessage() }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-grid">
+      <label class="form-control">
+        <span>Correo electrónico</span>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="ejemplo@correo.com"
+          [class.invalid]="email?.touched && email?.invalid"
+        />
+        <small *ngIf="email?.touched && email?.invalid">{{ formUtils.getFieldError(registerForm, 'email') }}</small>
+      </label>
+
+      <label class="form-control">
+        <span>Contraseña</span>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="•••••••"
+          [class.invalid]="password?.touched && password?.invalid"
+        />
+        <small *ngIf="password?.touched && password?.invalid">
+          {{ formUtils.getFieldError(registerForm, 'password') }}
+        </small>
+      </label>
+
+      <label class="form-control">
+        <span>Confirmar contraseña</span>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="•••••••"
+          [class.invalid]="confirmPassword?.touched && confirmPassword?.invalid"
+        />
+        <small *ngIf="confirmPassword?.touched && confirmPassword?.invalid">
+          {{ formUtils.getFieldError(registerForm, 'confirmPassword') }}
+        </small>
+      </label>
+
+      <button type="submit" class="btn primary" [disabled]="loading() || registerForm.invalid">
+        <ng-container *ngIf="loading(); else ready">Creando cuenta...</ng-container>
+        <ng-template #ready>Crear cuenta</ng-template>
+      </button>
+    </form>
+
+    <p class="switch">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login">Inicia sesión aquí</a>
+    </p>
+  </div>
+</div>

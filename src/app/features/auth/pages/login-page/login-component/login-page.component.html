@@ -1,0 +1,46 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h1>Inicia sesión</h1>
+    <p class="subtitle">Autentica tu cuenta para continuar</p>
+
+    <div class="alert error" *ngIf="loginResource.error()">
+      {{ errorMessage() }}
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-grid">
+      <label class="form-control">
+        <span>Correo electrónico</span>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="ejemplo@correo.com"
+          [class.invalid]="email?.touched && email?.invalid"
+        />
+        <small *ngIf="email?.touched && email?.invalid">{{ formUtils.getFieldError(loginForm, 'email') }}</small>
+      </label>
+
+      <label class="form-control">
+        <span>Contraseña</span>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="•••••••"
+          [class.invalid]="password?.touched && password?.invalid"
+        />
+        <small *ngIf="password?.touched && password?.invalid">
+          {{ formUtils.getFieldError(loginForm, 'password') }}
+        </small>
+      </label>
+
+      <button type="submit" class="btn primary" [disabled]="loading() || loginForm.invalid">
+        <ng-container *ngIf="loading(); else ready">Procesando...</ng-container>
+        <ng-template #ready>Iniciar sesión</ng-template>
+      </button>
+    </form>
+
+    <p class="switch">
+      ¿No tienes cuenta?
+      <a routerLink="/register">Regístrate aquí</a>
+    </p>
+  </div>
+</div>

@@ -1,8 +1,8 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NavbarDrawer } from "./features/daisyui-page/components/navbar-drawer/navbar-drawer";
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Footer } from "./features/daisyui-page/components/footer/footer";
-
+import { NavbarDrawer } from './shared/components/navbar-drawer/navbar-drawer';
+import { AuthService } from './core/services/firebase/auth.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, NavbarDrawer, Footer],
@@ -11,4 +11,14 @@ import { Footer } from "./features/daisyui-page/components/footer/footer";
 })
 export class App {
   protected readonly title = signal('03-ui-componentes-estilos');
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  currentUser = this.authService.currentUser;
+
+  logout(): void {
+    this.authService.logout().subscribe({
+      error: (error) => console.error('Error cerrando sesión', error)
+    });
+  }
 }

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NavbarDrawer } from './components/navbar-drawer/navbar-drawer';
-import { Footer } from './components/footer/footer';
 import { Code } from './components/code/code';
 import { Table } from './components/table/table';
 import { Card } from './components/card/card';
