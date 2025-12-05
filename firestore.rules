@@ -1,6 +1,21 @@
 rules_version = '2';
 
 service cloud.firestore {
+
+   match /databases/{database}/documents {
+    // Colección de usuarios
+    match /users/{userId} {
+      // Usuarios pueden leer su propio perfil
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Solo admins pueden actualizar roles
+      allow update: if request.auth != null && 
+                       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // El sistema crea perfiles al registrarse
+      allow create: if request.auth != null && request.auth.uid == userId;
+    }
+  }
   match /databases/{database}/documents {
     
     // Reglas para la colección de favoritos

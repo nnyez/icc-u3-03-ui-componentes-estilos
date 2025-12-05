@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { publicGuard } from './core/guards/public.guard';
 import { SimpsonsDetail } from './features/simpsons-page/components/simpsons-detail/simpsons-detail';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -44,7 +45,11 @@ export const routes: Routes = [
         (m) => m.SimpsonsDetail
       ),
     canActivate: [authGuard],
-
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./features/admin-page/admin-page').then((m) => m.AdminPage),
+    canActivate: [authGuard, adminGuard], // Ambos guards
   },
   {
     path: '**',

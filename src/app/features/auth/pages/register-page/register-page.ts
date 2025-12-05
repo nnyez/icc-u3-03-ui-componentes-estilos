@@ -7,18 +7,21 @@ import { of } from 'rxjs';
 
 import { AuthService } from '../../../../core/services/firebase/auth.service';
 import { FormUtils } from '../../../../shared/utils/form-utils';
-
+import { UserProfile } from '../../../../lib/types';
+import { doc, Firestore, setDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register-page.html',
-  styleUrl: './register-page.css'
+  styleUrl: './register-page.css',
 })
 export class RegisterPage {
   private fb = inject(FormBuilder);
+  private error = signal<string | null>(null);
   private authService = inject(AuthService);
+  private firestore = inject(Firestore);
   private router = inject(Router);
 
   registerForm: FormGroup;
@@ -32,7 +35,7 @@ export class RegisterPage {
         return of(null);
       }
       return this.authService.register(params.email, params.password);
-    }
+    },
   });
 
   loading = this.registerResource.isLoading;
@@ -43,7 +46,7 @@ export class RegisterPage {
       {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required]]
+        confirmPassword: ['', [Validators.required]],
       },
       { validators: this.passwordMatchValidator }
     );
@@ -67,13 +70,26 @@ export class RegisterPage {
   }
 
   onSubmit(): void {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      return;
-    }
-
     const { email, password } = this.registerForm.value;
-    this.registerTrigger.set({ email, password });
+
+    this.authService.register(email, password).subscribe({
+      next: async (userCredential) => {
+        // Crear documento de perfil en Firestore
+        const userProfile: UserProfile = {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email!,
+          role: 'user', // Rol por defecto
+          displayName: userCredential.user.displayName || '',
+        };
+
+        await setDoc(doc(this.firestore, 'users', userCredential.user.uid), userProfile);
+
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        this.errorMessage();
+      },
+    });
   }
 
   errorMessage = (): string => {
@@ -87,7 +103,7 @@ export class RegisterPage {
       'auth/email-already-in-use': 'Este correo ya esta registrado',
       'auth/invalid-email': 'El correo no es valido',
       'auth/operation-not-allowed': 'Operacion no permitida',
-      'auth/weak-password': 'La contrasena es debil'
+      'auth/weak-password': 'La contrasena es debil',
     };
 
     return map[code] ?? 'No pudimos crear la cuenta';
