@@ -1,0 +1,1 @@
+import{Ab as m,Ua as a,mb as n,nb as i}from"./chunk-AKAGUU27.js";var o=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=a({type:t,selectors:[["app-admin-page"]],decls:2,vars:0,template:function(e,s){e&1&&(n(0,"p"),m(1,"admin-page works!"),i())},encapsulation:2})};export{o as AdminPage};

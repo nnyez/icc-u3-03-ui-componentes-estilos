@@ -1,0 +1,1 @@
+var e=class{static getFieldError(o,t){let r=o.get(t);return!r||!r.errors||!r.touched?"":r.hasError("required")?"Este campo es requerido":r.hasError("email")?"Ingresa un correo valido":r.hasError("minlength")?`Minimo ${r.getError("minlength").requiredLength} caracteres`:r.hasError("passwordMismatch")?"Las contrasenas no coinciden":"Dato invalido"}};export{e as a};
